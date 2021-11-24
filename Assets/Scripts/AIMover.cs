@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class AIMover : MonoBehaviour
 {
+    [Tooltip("vitesse de déplacement"), Range(1,15)]
+    public float linearSpeed = 6;
+    [Tooltip("vitesse de rotation"), Range(1, 15)]
+    public float angularSpeed = 1;
+
+    private Transform player;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject goPlayer = GameObject.FindGameObjectWithTag("Player");
+        player = goPlayer.transform;
     }
 
     // Update is called once per frame
@@ -18,15 +27,18 @@ public class AIMover : MonoBehaviour
 
     void FixedUpdate()
     {
+        
+        
         Rigidbody rb = GetComponent<Rigidbody>();
         
         if (rb != null) 
         {
-            //
-            if (Input.GetButton("Fire1"))
+           /*if(rb.velocity.magnitude < linearSpeed)
+            {rb.AddForce(transform.forward * -linearSpeed);}*/
+
+            if(rb.angularVelocity.magnitude < angularSpeed)
             {
-                if (rb.velocity.magnitude < 5)
-                    rb.AddForce(transform.forward * -30);
+                rb.AddTorque(transform.up * -angularSpeed);
             }
             
 
@@ -38,4 +50,6 @@ public class AIMover : MonoBehaviour
 
         }
     }
+
+
 }
