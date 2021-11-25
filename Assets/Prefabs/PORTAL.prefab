@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabAI: {fileID: 391234201624256874, guid: 4f10c483d94983542a5468204ce7cb3c, type: 3}
   spawnPoint: {fileID: 2940940206210391263}
-  spawnTime: 7
+  spawnTime: 15
 --- !u!1 &5876430635805564887
 GameObject:
   m_ObjectHideFlags: 0

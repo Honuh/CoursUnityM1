@@ -40,7 +40,7 @@ public class AISpawner : MonoBehaviour
             initDelay = 0;
         }
 
-        Debug.Log(time);
+       
     }
 
     Transform Spawn()
