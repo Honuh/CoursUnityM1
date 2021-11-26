@@ -9,43 +9,84 @@ public class AISpawner : MonoBehaviour
     [Tooltip("Point de spawn des IA")]
     public Transform spawnPoint;
 
+    [System.Serializable]
+    public class Vague
+    {
+        public int nbSpawn;
+        public Transform prefabSpawn;
+    }
 
-    float time = 0;
-    [Tooltip("Delay before enemy spawn in 1/10 seconds"), Range(1, 50)]
-    public float spawnTime = 1;
-    private float initDelay;
+    [Tooltip("Vagues d'ennemis")]
+    public Vague[] vagues = new Vague [0];
+    private int currentVague = 0;
+    private int nbSpawned = 0;
+
+    private int nb;
+    public int nbMax;
+
+
+    float timeSpawn = 0;
+    [Range(1, 50)]
+    public float timeNextSpawn = 0;
+
+    float timeVague = 0;
+    [Range(5, 50)]
+    public float timeNextVague = 0;
+
+    private float non = 1;
 
     private Vector3 lastPichenette;
 
     // Start is called before the first frame update
     void Start()
     {
-        initDelay = Random.Range(0f, 1.0f);
+        non = Random.Range(0f, 1.0f);
+        nbSpawned = 0;
+        currentVague = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        time = time + Time.deltaTime;
-        if (time > spawnTime / 10 + initDelay)
+        timeVague += Time.deltaTime;
+        if(timeVague > timeNextVague)
         {
-            Transform spawnedAi = Spawn();
-            Vector3 pichenette = spawnedAi.forward * -5;
-            pichenette.x += Random.Range(-5.0f, 5.0f);
-            pichenette.y += Random.Range(0.0f, 2.0f);
-
-            AddPichenette(spawnedAi, pichenette);
-            lastPichenette = pichenette;
-            time = 0;
-            initDelay = 0;
+            timeVague = 0;
+            currentVague++;
+            nbSpawned = 0;
         }
 
+        if(currentVague < vagues.Length)
+        {
+            Vague vagueNow = vagues[currentVague];
+            int nbToSpawn = vagueNow.nbSpawn;
+            if(nbSpawned < nbToSpawn)
+            {
+                timeSpawn = timeSpawn + Time.deltaTime;
+                if (timeSpawn > timeNextSpawn / 10 + non && nb < nbMax)
+                {
+                    Transform spawnedAi = Spawn(vagueNow.prefabSpawn);
+                    nbSpawned++;
+                    Vector3 pichenette = spawnedAi.forward * -5;
+                    pichenette.x += Random.Range(-1.0f, 1.0f);
+                    pichenette.y += Random.Range(0.0f, 1.0f);
+
+                    AddPichenette(spawnedAi, pichenette);
+                    lastPichenette = pichenette;
+                    timeSpawn = 0;
+                    non = 0;
+                    nb += 1;
+                    
+                }
+            }
+        }
        
     }
 
-    Transform Spawn()
+    Transform Spawn(Transform prefabAi)
     {
-        Transform ai = GameObject.Instantiate<Transform>(prefabAI);
+        Transform ai = GameObject.Instantiate<Transform>(prefabAi);
         ai.position = spawnPoint.position;
         ai.rotation = spawnPoint.rotation;
 
