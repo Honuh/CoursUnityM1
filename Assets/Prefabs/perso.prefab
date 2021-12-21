@@ -943,6 +943,7 @@ MonoBehaviour:
   linearSpeed: 10
   angularSpeed: 5
   life: 100
+  attackRange: 4
 --- !u!136 &4376508513029939871
 CapsuleCollider:
   m_ObjectHideFlags: 0

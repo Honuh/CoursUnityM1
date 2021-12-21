@@ -12,32 +12,42 @@ public class AIMover : MonoBehaviour
     private Transform player;
     private Vector3 dirPlayer;
     private float angleAuJoueur;
+    GameObject goPlayer;
 
 
-    Animator anim;
+
 
 
 
     public float life = 100;
-
+    public float attackRange = 1;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject goPlayer = GameObject.FindGameObjectWithTag("Player");
+        goPlayer= GameObject.FindGameObjectWithTag("Player");
         player = goPlayer.transform;
+        anim = GetComponent<Animator>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim.SetBool("attack", false);
         dirPlayer = player.position - transform.position;
         dirPlayer = dirPlayer.normalized;
         angleAuJoueur = Vector3.SignedAngle(dirPlayer, transform.forward, transform.up);
 
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        {
+            anim.SetBool("attack", true);
+            //Attack(goPlayer, 10);
+        }
+        
 
-
+        
     }
 
     void FixedUpdate()
@@ -74,7 +84,7 @@ public class AIMover : MonoBehaviour
             {
                 rb.AddTorque(transform.up * -angularSpeed);
             }*/
-            Animator anim = GetComponent<Animator>();
+            
             anim.SetFloat("Speed", rb.velocity.magnitude);
 
             if (life <= 0)
@@ -85,10 +95,6 @@ public class AIMover : MonoBehaviour
                 angularSpeed = 0;
                 anim.SetBool("mort", true);
                 Destroy(gameObject, 2);
-
-
-
-
 
             }
         }
@@ -101,4 +107,6 @@ public class AIMover : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + dirPlayer);
 
     }
+
+    
 }
