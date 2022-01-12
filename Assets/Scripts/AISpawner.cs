@@ -29,8 +29,8 @@ public class AISpawner : MonoBehaviour
     [Range(1, 50)]
     public float timeNextSpawn = 0;
 
-    float timeVague = 0;
-    [Range(5, 50)]
+    public float timeVague = 0;
+    [Range(5, 150)]
     public float timeNextVague = 0;
 
     private float non = 1;
@@ -68,7 +68,7 @@ public class AISpawner : MonoBehaviour
                 {
                     Transform spawnedAi = Spawn(vagueNow.prefabSpawn);
                     nbSpawned++;
-                    Vector3 pichenette = spawnedAi.forward * -5;
+                    Vector3 pichenette = spawnedAi.forward * -15;
                     pichenette.x += Random.Range(-1.0f, 1.0f);
                     pichenette.y += Random.Range(0.0f, 1.0f);
 

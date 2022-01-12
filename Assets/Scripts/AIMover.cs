@@ -9,12 +9,15 @@ public class AIMover : MonoBehaviour
     [Tooltip("vitesse de rotation"), Range(1, 15)]
     public float angularSpeed = 1;
 
+    [Header("Damage Particle")]
+    public ParticleSystem damageParticle;
+
     private Transform player;
     private Vector3 dirPlayer;
     private float angleAuJoueur;
     GameObject goPlayer;
 
-
+    
 
 
 
@@ -89,7 +92,7 @@ public class AIMover : MonoBehaviour
 
             if (life <= 0)
             {
-
+                
                 linearSpeed = 0;
                 rb.velocity = Vector3.zero;
                 angularSpeed = 0;

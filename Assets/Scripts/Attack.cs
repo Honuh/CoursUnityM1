@@ -12,7 +12,8 @@ public class Attack : MonoBehaviour
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.life -= puissance;
+                player.currentLife -= puissance;
+
             }
 
         }

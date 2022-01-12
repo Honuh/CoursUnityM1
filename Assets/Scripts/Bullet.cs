@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
         if(other != null)
         {
             other.life -= puissance;
+            other.damageParticle.Play();
             
         }
 

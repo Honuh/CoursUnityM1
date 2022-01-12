@@ -31,7 +31,7 @@ public class Pistol : MonoBehaviour
 
         //Direction du Tir
         RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward * 20, out hit, Mathf.Infinity))
+        if (Physics.Raycast(cam.position, cam.forward * 40, out hit, Mathf.Infinity))
         {
             shotPoint = hit.point;
             dirTir = hit.point - muzzle.position;
